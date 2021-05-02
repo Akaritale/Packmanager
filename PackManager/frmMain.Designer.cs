@@ -38,9 +38,9 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.unpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.packToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.packToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.unpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,9 +85,9 @@
             this.openToolStripMenuItem,
             this.reloadToolStripMenuItem,
             this.toolStripSeparator,
+            this.unpackToolStripMenuItem,
             this.packToolStripMenuItem,
             this.packToToolStripMenuItem,
-            this.unpackToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Image = global::PackManager.Properties.Resources.folder;
@@ -125,11 +125,22 @@
             this.reloadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.reloadToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.reloadToolStripMenuItem.Text = "&Reload";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.ReloadToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(185, 6);
+            // 
+            // unpackToolStripMenuItem
+            // 
+            this.unpackToolStripMenuItem.Image = global::PackManager.Properties.Resources.folder_magnify;
+            this.unpackToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.unpackToolStripMenuItem.Name = "unpackToolStripMenuItem";
+            this.unpackToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.unpackToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.unpackToolStripMenuItem.Text = "Unpack";
+            this.unpackToolStripMenuItem.Click += new System.EventHandler(this.UnpackToolStripMenuItem_Click);
             // 
             // packToolStripMenuItem
             // 
@@ -149,16 +160,6 @@
             | System.Windows.Forms.Keys.S)));
             this.packToToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.packToToolStripMenuItem.Text = "&Pack to ";
-            // 
-            // unpackToolStripMenuItem
-            // 
-            this.unpackToolStripMenuItem.Image = global::PackManager.Properties.Resources.folder_magnify;
-            this.unpackToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.unpackToolStripMenuItem.Name = "unpackToolStripMenuItem";
-            this.unpackToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.unpackToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.unpackToolStripMenuItem.Text = "Unpack";
-            this.unpackToolStripMenuItem.Click += new System.EventHandler(this.UnpackToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -194,6 +195,7 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.settingsToolStripMenuItem.Text = "&Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -226,24 +228,7 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.ItemHeight = 15;
             this.listBox.Items.AddRange(new object[] {
-            "etc",
-            "icon",
-            "item",
-            "root",
-            "locale_sg",
-            "monster",
-            "monster2",
-            "npc",
-            "npc2",
-            "patch1",
-            "pc",
-            "pc2",
-            "terrain",
-            "textureset",
-            "tree",
-            "uiloading",
-            "uiscript",
-            "zone"});
+            "loading..."});
             this.listBox.Location = new System.Drawing.Point(12, 27);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(614, 304);
@@ -300,6 +285,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void ReloadToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            LoadDirectoryList();
         }
 
 

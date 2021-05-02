@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 
 namespace PackManager.Core
 {
-    enum Action
+    public enum Action
     {
         Pack,
         Unpack,
     }
-    
-    class PackMakerSettings
+
+    public class PackMakerSettings
     {
         public string File { get; set; }
         public Action Action { get; set; }
         public bool ParallelProcessing { get; set;  } = true;
-        
         public bool NoLog { get; set;  } = false;
     }
 
-    class StartupGenerator
+    internal class StartupGenerator
     {
         private readonly PackMakerSettings _settings;
         public StartupGenerator(PackMakerSettings settings)
@@ -50,27 +49,32 @@ namespace PackManager.Core
         }
     }
 
-    class PackMaker
+    public static class PackMaker
     {
         private const string Binary = "PackMakerLite.exe";
-        public static void Pack(string archive, PackMakerSettings settings)
+        public static void Pack(PackMakerSettings settings)
         {
-            settings.File = archive;
-            
-            var arguments = new StartupGenerator(settings).Build();
-            var clientProcess = new Process();
-            clientProcess.StartInfo = new ProcessStartInfo(Binary, arguments);
-            clientProcess.Start();
+            settings.Action = Action.Pack;
+            _ = CreatePackMakerProcess(settings).Start();
         }
 
-        public static void Unpack(string archive, PackMakerSettings settings)
+        public static void Unpack(PackMakerSettings settings)
         {
-            settings.File = archive;
-            
-            var arguments = new StartupGenerator(settings).Build();
+            settings.Action = Action.Unpack;
+            _ = CreatePackMakerProcess(settings).Start();
+        }
+
+        private static Process CreatePackMakerProcess(PackMakerSettings settings)
+        {
             var clientProcess = new Process();
-            clientProcess.StartInfo = new ProcessStartInfo(Binary, arguments);
-            clientProcess.Start();
+            clientProcess.StartInfo = new ProcessStartInfo
+            {
+                FileName = Binary,
+                WorkingDirectory = Properties.Settings.Default.PackDirectory,
+                Arguments = new StartupGenerator(settings).Build()
+            };
+
+            return clientProcess;
         }
     }
 }
